@@ -3,6 +3,9 @@ package ru.nsu.koidenko;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Класс, представляющий операцию деления двух математических выражений.
+ */
 public class Div extends BinaryOperation {
     public Div(Expression left, Expression right) {
         super(left, right);

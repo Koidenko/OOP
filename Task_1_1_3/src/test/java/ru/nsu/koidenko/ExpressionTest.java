@@ -1,30 +1,31 @@
 package ru.nsu.koidenko;
 
-import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Тесты для проверки корректности работы математических выражений.
+ */
 public class ExpressionTest {
 
     @Test
     void testToStringAndPrint() {
-        Expression e = new Add(new Number(3), new Mul(new Number(2), new Variable("x")));
+        Expression e = new Add(new Number(3),
+                new Mul(new Number(2), new Variable("x")));
         assertEquals("(3+(2*x))", e.toString());
 
-        Expression sub = new Sub(new Variable("y"), new Div(new Number(10), new Number(2)));
+        Expression sub = new Sub(new Variable("y"),
+                new Div(new Number(10), new Number(2)));
         assertEquals("(y-(10/2))", sub.toString());
     }
 
     @Test
     void testEvalWithMapAndString() {
-        Expression e = new Add(new Number(3), new Mul(new Number(2), new Variable("x")));
+        Expression e = new Add(new Number(3),
+                new Mul(new Number(2), new Variable("x")));
 
         Map<String, Integer> vars = new HashMap<>();
         vars.put("x", 10);
@@ -42,7 +43,8 @@ public class ExpressionTest {
 
     @Test
     void testDerivative() {
-        Expression e = new Add(new Number(3), new Mul(new Number(2), new Variable("x")));
+        Expression e = new Add(new Number(3),
+                new Mul(new Number(2), new Variable("x")));
         Expression de = e.derivative("x");
         assertEquals("(0+((0*x)+(2*1)))", de.toString());
 
@@ -72,7 +74,8 @@ public class ExpressionTest {
 
     @Test
     void testSimplify() {
-        Expression constantExpr = new Add(new Number(3), new Mul(new Number(2), new Number(5)));
+        Expression constantExpr = new Add(new Number(3),
+                new Mul(new Number(2), new Number(5)));
         assertEquals(new Number(13), constantExpr.simplify());
 
         Expression mulZeroLeft = new Mul(new Number(0), new Variable("x"));
@@ -87,10 +90,16 @@ public class ExpressionTest {
         Expression mulOneRight = new Mul(new Variable("x"), new Number(1));
         assertEquals(new Variable("x"), mulOneRight.simplify());
 
-        Expression subSame = new Sub(new Add(new Variable("x"), new Number(1)), new Add(new Variable("x"), new Number(1)));
+        Expression subSame = new Sub(
+                new Add(new Variable("x"), new Number(1)),
+                new Add(new Variable("x"), new Number(1))
+        );
         assertEquals(new Number(0), subSame.simplify());
 
-        Expression complex = new Add(new Mul(new Variable("x"), new Number(0)), new Mul(new Variable("y"), new Number(1)));
+        Expression complex = new Add(
+                new Mul(new Variable("x"), new Number(0)),
+                new Mul(new Variable("y"), new Number(1))
+        );
         assertEquals(new Variable("y"), complex.simplify());
     }
 

@@ -3,6 +3,9 @@ package ru.nsu.koidenko;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Класс, представляющий операцию вычитания двух математических выражений.
+ */
 public class Sub extends BinaryOperation {
     public Sub(Expression left, Expression right) {
         super(left, right);

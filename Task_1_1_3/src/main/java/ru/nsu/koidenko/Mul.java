@@ -3,6 +3,9 @@ package ru.nsu.koidenko;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Класс, представляющий операцию умножения двух математических выражений.
+ */
 public class Mul extends BinaryOperation {
     public Mul(Expression left, Expression right) {
         super(left, right);

@@ -41,9 +41,9 @@ public abstract class Expression {
             for (String part : parts) {
                 String token = part.trim();
                 if (!token.isEmpty()) {
-                    String[] KeyValue = token.split("=");
-                    if (KeyValue.length == 2) {
-                        variables.put(KeyValue[0].trim(), Integer.parseInt(KeyValue[1].trim()));
+                    String[] keyValue = token.split("=");
+                    if (keyValue.length == 2) {
+                        variables.put(keyValue[0].trim(), Integer.parseInt(keyValue[1].trim()));
                     }
                 }
             }
