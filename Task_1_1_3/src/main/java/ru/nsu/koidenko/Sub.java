@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Класс, представляющий операцию вычитания двух математических выражений.
+ * Операция вычитания.
  */
 public class Sub extends BinaryOperation {
+
     public Sub(Expression left, Expression right) {
         super(left, right);
     }
@@ -33,6 +34,9 @@ public class Sub extends BinaryOperation {
 
         if (simplifiedLeft.equals(simplifiedRight)) {
             return new Number(0);
+        }
+        if (simplifiedRight.equals(new Number(0))) {
+            return simplifiedLeft;
         }
 
         Expression newExpression = new Sub(simplifiedLeft, simplifiedRight);

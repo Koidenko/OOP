@@ -3,39 +3,22 @@ package ru.nsu.koidenko;
 import java.util.Objects;
 
 /**
- * Абстрактный класс для бинарных математических операций, содержащих левый и правый операнды.
+ * Базовый класс для бинарных операций.
  */
 public abstract class BinaryOperation extends Expression {
-    /** Левый операнд бинарной операции. */
+
     protected final Expression left;
-    /** Правый операнд бинарной операции. */
     protected final Expression right;
 
-    /**
-     * Конструктор для создания бинарной операции.
-     *
-     * @param left левое подвыражение
-     * @param right правое подвыражение
-     */
     public BinaryOperation(Expression left, Expression right) {
         this.left = left;
         this.right = right;
     }
 
-    /**
-     * Возвращает левый операнд.
-     *
-     * @return левое подвыражение
-     */
     public Expression getLeft() {
         return left;
     }
 
-    /**
-     * Возвращает правый операнд.
-     *
-     * @return правое подвыражение
-     */
     public Expression getRight() {
         return right;
     }

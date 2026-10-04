@@ -4,25 +4,16 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Класс, представляющий числовую константу в математическом выражении.
+ * Числовая константа.
  */
 public class Number extends Expression {
+
     private final int value;
 
-    /**
-     * Конструктор для создания числовой константы.
-     *
-     * @param value значение константы
-     */
     public Number(int value) {
         this.value = value;
     }
 
-    /**
-     * Возвращает значение числовой константы.
-     *
-     * @return целое число
-     */
     public int getValue() {
         return value;
     }

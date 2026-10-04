@@ -4,25 +4,16 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Класс, представляющий переменная в математическом выражении.
+ * Переменная в выражении.
  */
 public class Variable extends Expression {
+
     private final String name;
 
-    /**
-     * Конструктор для создания переменной.
-     *
-     * @param name имя переменной (может быть многобуквенным)
-     */
     public Variable(String name) {
         this.name = name;
     }
 
-    /**
-     * Возвращает имя переменной.
-     *
-     * @return имя переменной
-     */
     public String getName() {
         return name;
     }

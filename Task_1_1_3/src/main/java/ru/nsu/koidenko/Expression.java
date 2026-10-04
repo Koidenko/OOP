@@ -3,36 +3,33 @@ package ru.nsu.koidenko;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
- * Абстрактный базовый класс, представляющий математическое выражение.
- * Предоставляет функциональность для дифференцирования, вычисления,
- * печатного отображения, парсинга и упрощения выражений.
+ * Базовый абстрактный класс для математических выражений.
  */
 public abstract class Expression {
+
     /**
-     * Вычисляет символьную производную выражения по заданной переменной.
+     * Вычисляет производную выражения по переменной.
      *
-     * @param variableName имя переменной, по которой выполняется дифференцирование
-     * @return новое математическое выражение, представляющее производную
+     * @param variableName имя переменной
+     * @return выражение производной
      */
     public abstract Expression derivative(String variableName);
 
     /**
-     * Вычисляет числовое значение выражения на основе переданных значений переменных.
+     * Вычисляет значение выражения с заданными переменными.
      *
-     * @param variables карта, содержащая имена переменных и их числовые значения
-     * @return результат вычисления выражения
-     * @throws IllegalArgumentException если значение какой-либо переменной не найдено
+     * @param variables карта значений переменных
+     * @return результат вычисления
      */
     public abstract int eval(Map<String, Integer> variables);
 
     /**
-     * Вычисляет числовое значение выражения на основе строки с означиванием переменных.
+     * Вычисляет значение выражения по строке присваиваний.
      *
-     * @param assignments строка вида "x = 10; y = 13", задающая значения переменных
-     * @return результат вычисления выражения
+     * @param assignments строка вида "x = 10; y = 13"
+     * @return результат вычисления
      */
     public int eval(String assignments) {
         Map<String, Integer> variables = new HashMap<>();
@@ -51,44 +48,36 @@ public abstract class Expression {
         return eval(variables);
     }
 
+    @Override
     public abstract String toString();
 
-    /**
-     * Выводит строковое представление выражения в указанный поток.
-     *
-     * @param stream поток вывода (например, System.out)
-     */
     public void print(PrintStream stream) {
         stream.print(this.toString());
     }
 
-    /**
-     * Выводит строковое представление выражения в стандартный поток вывода (консоль).
-     */
     public void print() {
         print(System.out);
     }
 
     /**
-     * Проверяет, содержит ли выражение хотя бы одну переменную.
+     * Проверяет наличие переменных в выражении.
      *
-     * @return true, если в выражении есть переменные, иначе false
+     * @return true, если есть переменные
      */
     public abstract boolean hasVariables();
 
     /**
-     * Выполняет упрощение математического выражения по заданным правилам.
+     * Упрощает выражение по математическим правилам.
      *
-     * @return новое упрощенное выражение
+     * @return упрощенное выражение
      */
     public abstract Expression simplify();
 
     /**
-     * Создает объект математического выражения из его строкового представления.
-     * Поддерживает строки как со скобками, так и без них с учетом приоритета операций.
+     * Разбирает строку в математическое выражение.
      *
-     * @param input строковое выражение (например, "(3+(2*x))" или "3 + 2 * x")
-     * @return распарсенное математическое выражение или null, если строка пуста
+     * @param input входная строка
+     * @return распарсенное выражение
      */
     public static Expression parse(String input) {
         if (input == null) {
@@ -99,7 +88,8 @@ public abstract class Expression {
     }
 
     private static Expression parseExpression(String input) {
-        if (input.startsWith("(") && input.endsWith(")") && isBalanced(input.substring(1, input.length() - 1))) {
+        if (input.startsWith("(") && input.endsWith(")")
+                && isBalanced(input.substring(1, input.length() - 1))) {
             return parseExpression(input.substring(1, input.length() - 1));
         }
 
@@ -125,19 +115,19 @@ public abstract class Expression {
         if (mainOp != -1) {
             String leftPart = input.substring(0, mainOp);
             String rightPart = input.substring(mainOp + 1);
-            Expression leftExpression = parseExpression(leftPart);
-            Expression rightExpression = parseExpression(rightPart);
+            Expression leftExpr = parseExpression(leftPart);
+            Expression rightExpr = parseExpression(rightPart);
             char operator = input.charAt(mainOp);
 
             switch (operator) {
                 case '+':
-                    return new Add(leftExpression, rightExpression);
+                    return new Add(leftExpr, rightExpr);
                 case '-':
-                    return new Sub(leftExpression, rightExpression);
+                    return new Sub(leftExpr, rightExpr);
                 case '*':
-                    return new Mul(leftExpression, rightExpression);
+                    return new Mul(leftExpr, rightExpr);
                 case '/':
-                    return new Div(leftExpression, rightExpression);
+                    return new Div(leftExpr, rightExpr);
                 default:
                     break;
             }

@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Класс, представляющий операцию деления двух математических выражений.
+ * Операция деления.
  */
 public class Div extends BinaryOperation {
+
     public Div(Expression left, Expression right) {
         super(left, right);
     }
@@ -36,6 +37,13 @@ public class Div extends BinaryOperation {
     public Expression simplify() {
         Expression simplifiedLeft = left.simplify();
         Expression simplifiedRight = right.simplify();
+
+        if (simplifiedLeft.equals(new Number(0))) {
+            return new Number(0);
+        }
+        if (simplifiedRight.equals(new Number(1))) {
+            return simplifiedLeft;
+        }
 
         Expression newExpression = new Div(simplifiedLeft, simplifiedRight);
         if (!newExpression.hasVariables()) {

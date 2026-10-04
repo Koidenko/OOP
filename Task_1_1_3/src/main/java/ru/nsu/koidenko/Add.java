@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Класс, представляющий операцию сложения двух математических выражений.
+ * Операция сложения.
  */
 public class Add extends BinaryOperation {
+
     public Add(Expression left, Expression right) {
         super(left, right);
     }
@@ -30,6 +31,13 @@ public class Add extends BinaryOperation {
     public Expression simplify() {
         Expression simplifiedLeft = left.simplify();
         Expression simplifiedRight = right.simplify();
+
+        if (simplifiedLeft.equals(new Number(0))) {
+            return simplifiedRight;
+        }
+        if (simplifiedRight.equals(new Number(0))) {
+            return simplifiedLeft;
+        }
 
         Expression newExpression = new Add(simplifiedLeft, simplifiedRight);
         if (!newExpression.hasVariables()) {
