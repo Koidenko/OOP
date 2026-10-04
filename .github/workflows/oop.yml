@@ -1,8 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
   pull_request:
     branches: [ "main" ]
@@ -14,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./${{ github.event.pull_request.title }}
+        # Указываем жестко имя вашей папки с задачей
+        working-directory: ./Task_1_1_3
     steps:
       - uses: actions/checkout@v3
 
@@ -34,7 +32,8 @@ jobs:
         id: jacoco
         uses: madrapps/jacoco-report@v1.2
         with:
-          paths: ./${{ github.event.pull_request.title }}/build/reports/jacoco/test/jacocoTestReport.xml
+          # Внутри working-directory путь считается относительно него
+          paths: ./Task_1_1_3/build/reports/jacoco/test/jacocoTestReport.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 80
           min-coverage-changed-files: 80
@@ -48,8 +47,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           clean: true
-          folder: ${{ github.event.pull_request.title }}/build/docs/javadoc
-          target-folder: ${{ github.event.pull_request.title }}
+          folder: Task_1_1_3/build/docs/javadoc
+          target-folder: Task_1_1_3
 
   checkstyle:
     runs-on: ubuntu-latest
